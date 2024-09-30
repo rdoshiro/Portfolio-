@@ -66,7 +66,7 @@ with col4:
 
 
 
-from cvzone.HandTrackingModule import HandDetector
+#from cvzone.HandTrackingModule import HandDetector
 
     # Initialize the webcam to capture video
     # The '2' indicates the third camera connected to your computer; '0' would usually refer to the built-in camera
