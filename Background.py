@@ -104,7 +104,3 @@ webrtc_streamer(
     video_frame_callback=video_frame_callback,
     media_stream_constraints={"video": True, "audio": False}
 )
-
-    # Keep the window open and update it for each frame; wait for 1 millisecond between frames
-    cv2.waitKey(1)
-
