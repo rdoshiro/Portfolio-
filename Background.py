@@ -1,11 +1,11 @@
-import cvzone
+#import cvzone
 import google.generativeai as genai
 import numpy as np
 import streamlit as st
 from streamlit_webrtc import WebRtcMode, webrtc_streamer
 import av
-import mediapipe 
-from cvzone.HandTrackingModule import HandDetector  # Import the HandDetector directly
+import mediapipe as mp
+#from cvzone.HandTrackingModule import HandDetector  # Import the HandDetector directly
 
 # Configure Google Generative AI
 api_key = st.secrets["GOOGLE_API_KEY"]
