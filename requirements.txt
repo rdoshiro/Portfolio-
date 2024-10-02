@@ -2,5 +2,14 @@ cvzone
 google-generativeai
 streamlit
 mediapipe
-opencv-python-headless==4.5.5.64
 numpy
+opencv-python-headless==4.8.1.78
+pydub==0.25.1
+streamlit_webrtc~=0.47.7
+webencodings==0.5.1
+Werkzeug==1.0.1
+widgetsnbextension==3.5.1
+wrapt==1.12.1
+pydub==0.25.1
+twilio~=8.10.1
+matplotlib
