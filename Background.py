@@ -66,8 +66,6 @@ with col4:
 detector = HandDetector(staticMode=False, maxHands=1, modelComplexity=1, detectionCon=0.5, minTrackCon=0.5)
 
 
-})
-
 # Callback function to process each frame
 def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     img = frame.to_ndarray(format="bgr24")  # Convert frame to numpy array
