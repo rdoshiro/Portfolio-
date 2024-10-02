@@ -1,4 +1,4 @@
-import cvzone
+#import cvzone
 import google.generativeai as genai
 import numpy as np
 import streamlit as st
