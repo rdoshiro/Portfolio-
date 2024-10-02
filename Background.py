@@ -2,7 +2,7 @@
 import google.generativeai as genai
 import numpy as np
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
+from streamlit_webrtc import WebRtcMode, webrtc_streamer
 import av
 
 # Configure Google Generative AI
@@ -97,10 +97,12 @@ def video_frame_callback(frame):
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 # Initialize WebRTC streamer to capture webcam input and process
-webrtc_streamer(
-    key="gesture-detection",
+webrtc_ctx = webrtc_streamer(
+    key="webcam-stream",
     mode=WebRtcMode.SENDRECV,
-    rtc_configuration=RTC_CONFIGURATION,
     video_frame_callback=video_frame_callback,
-    media_stream_constraints={"video": True, "audio": False}
+    media_stream_constraints={"video": True, "audio": False},  # Only video, no audio
 )
+
+# Optionally, you can add a message or instructions
+st.markdown("Webcam streaming using Streamlit.")
