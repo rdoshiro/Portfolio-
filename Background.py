@@ -70,7 +70,7 @@ RTC_CONFIGURATION = RTCConfiguration({
 })
 
 # Callback function to process each frame
-def video_frame_callback(frame):
+def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     img = frame.to_ndarray(format="bgr24")  # Convert frame to numpy array
 
     # Detect hand landmarks
