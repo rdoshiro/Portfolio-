@@ -102,4 +102,4 @@ webrtc_ctx = webrtc_streamer(
 )
 
 # Optionally, you can add a message or instructions
-st.markdown("Webcam streaming using Streamlit.")
+#st.markdown("Webcam streaming using Streamlit.")
