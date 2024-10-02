@@ -65,9 +65,7 @@ with col4:
 # Hand detector initialization
 detector = HandDetector(staticMode=False, maxHands=1, modelComplexity=1, detectionCon=0.5, minTrackCon=0.5)
 
-# WebRTC setup for webcam capture
-RTC_CONFIGURATION = RTCConfiguration({
-    "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
+
 })
 
 # Callback function to process each frame
