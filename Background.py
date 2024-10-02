@@ -1,9 +1,10 @@
-#import cvzone
+import cvzone
 import google.generativeai as genai
 import numpy as np
 import streamlit as st
 from streamlit_webrtc import WebRtcMode, webrtc_streamer
 import av
+from cvzone.HandTrackingModule import HandDetector  # Import the HandDetector directly
 
 # Configure Google Generative AI
 api_key = st.secrets["GOOGLE_API_KEY"]
@@ -62,7 +63,7 @@ with col4:
     output_text_area = st.subheader("")
 
 # Hand detector initialization
-detector = cvzone.HandTrackingModule.HandDetector(staticMode=False, maxHands=1, modelComplexity=1, detectionCon=0.5, minTrackCon=0.5)
+detector = HandDetector(staticMode=False, maxHands=1, modelComplexity=1, detectionCon=0.5, minTrackCon=0.5)
 
 # WebRTC setup for webcam capture
 RTC_CONFIGURATION = RTCConfiguration({
