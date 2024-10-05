@@ -130,4 +130,13 @@ while run:
 
         if output_text:
             output_text_area.text(output_text)
-
+# Setup WebRTC Streamer
+webrtc_ctx = webrtc_streamer(
+    key="gesture-detector",
+    mode=WebRtcMode.SENDRECV,
+    media_stream_constraints={
+        "video": True,
+        "audio": False,
+    },
+    async_processing=True,
+)
