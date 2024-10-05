@@ -93,7 +93,7 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
             response = model.generate_content("Generate a creative response")
             st.write(response.text)
           
-    return av.VideoFrame.from_ndarray(img, format="bgr24")
+   return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 # Initialize WebRTC streamer to capture webcam input and process
 webrtc_ctx = webrtc_streamer(
