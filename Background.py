@@ -68,19 +68,22 @@ detector = mp_hands.Hands(
 #    return up
 
 # Callback function to process each frame
+# Callback function to process each frame
 def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
-    img = frame.to_ndarray(format="bgr24")
-    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    results = detector.process(img_rgb)
+    img = frame.to_ndarray(format="bgr24")  # Convert frame to numpy array
 
-    if results.multi_hand_landmarks:
-        for hand_landmarks in results.multi_hand_landmarks:
-            mp_drawing.draw_landmarks(
-                img, hand_landmarks, mp_hands.HAND_CONNECTIONS
-            )
+    # Detect hand landmarks
+    hands, img = detector.findHands(img, draw=True, flipType=True)
+    
+    # Process hand information and gestures
+    if hands:
+        hand = hands[0]
+        lmList = hand["lmList"]
+        fingers = detector.fingersUp(hand)
+      
             # Check which fingers are up
-            fingers = fingers_up(hand_landmarks.landmark)
-            st.write(f"Fingers status: {fingers}")
+           # fingers = fingers_up(hand_landmarks.landmark)
+            #st.write(f"Fingers status: {fingers}")
 
             if fingers == [0, 1, 0, 0, 0]:  # Pointer gesture
                 st.write("Pointer gesture detected, ready to draw!")
