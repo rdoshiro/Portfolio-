@@ -46,13 +46,6 @@ with col6:
     st.subheader("Autonomous Robotic Vehicle")
     st.video("Videos/Robotic_Vehicle.mov")
 
-# Initialize WebRTC streamer to capture webcam input and process
-webrtc_ctx = webrtc_streamer(
-    key="webcam-stream",
-    mode=WebRtcMode.SENDRECV,
-    video_frame_callback=video_frame_callback,
-    media_stream_constraints={"video": True, "audio": False}
-)
 
 # Hand detector initialization
 mp_drawing = mp.solutions.drawing_utils
@@ -102,3 +95,10 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
           
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
+# Initialize WebRTC streamer to capture webcam input and process
+webrtc_ctx = webrtc_streamer(
+    key="webcam-stream",
+    mode=WebRtcMode.SENDRECV,
+    video_frame_callback=video_frame_callback,
+    media_stream_constraints={"video": True, "audio": False}
+)
