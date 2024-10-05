@@ -84,15 +84,13 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
             # Check which fingers are up
            # fingers = fingers_up(hand_landmarks.landmark)
             #st.write(f"Fingers status: {fingers}")
-
-            if fingers == [0, 1, 0, 0, 0]:  # Pointer gesture
-                st.write("Pointer gesture detected, ready to draw!")
-            elif fingers == [1, 1, 0, 0, 1]:  # Reset condition
-                st.write("Gesture to reset detected, resetting canvas...")
-            if fingers == [1, 1, 1, 1, 1]:  # All fingers up
-                response = model.generate_content("Generate a creative response")
-                st.write(response.text)
-
+        if fingers == [0, 1, 0, 0, 0]:  # Pointer gesture
+            st.write("Pointer gesture detected, ready to draw!")
+        elif fingers == [1, 1, 0, 0, 1]:  # Reset condition
+            st.write("Gesture to reset detected, resetting canvas...")
+        if fingers == [1, 1, 1, 1, 1]:  # All fingers up
+            response = model.generate_content("Generate a creative response")
+            st.write(response.text)
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 # Initialize WebRTC streamer to capture webcam input and process
