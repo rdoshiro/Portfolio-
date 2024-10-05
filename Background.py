@@ -49,7 +49,6 @@ with col6:
 
 # Hand detector initialization
 mp_drawing = mp.solutions.drawing_utils
-mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 detector = mp_hands.Hands(
     model_complexity=0,
@@ -57,43 +56,59 @@ detector = mp_hands.Hands(
     min_tracking_confidence=0.5
 )
 
+
 # Function to check which fingers are up
-# def fingers_up(landmarks):
-    # tips = [4, 8, 12, 16, 20]  # Thumb tip, index tip, etc.
-    # up = []
-    # for tip in tips:
-    #    if landmarks[tip].y < landmarks[tip - 2].y:
-   #         up.append(1)  # Finger is up
-  #      else:
- #           up.append(0)  # Finger is down
-#    return up
+def fingers_up(landmarks):
+    tips = [4, 8, 12, 16, 20]  # Thumb tip, index tip, etc.
+    up = []
+
+    # Thumb: compare x-coordinates (special case)
+    if landmarks[tips[0]].x > landmarks[tips[0] - 1].x:
+        up.append(1)  # Thumb is up
+    else:
+        up.append(0)  # Thumb is down
+
+    # Other fingers: compare y-coordinates
+    for tip in tips[1:]:
+        if landmarks[tip].y < landmarks[tip - 2].y:
+            up.append(1)  # Finger is up
+        else:
+            up.append(0)  # Finger is down
+
+    return up
 
 # Callback function to process each frame
 # Callback function to process each frame
 def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     img = frame.to_ndarray(format="bgr24")  # Convert frame to numpy array
 
-    # Detect hand landmarks
-    hands, img = detector.findHands(img, draw=True, flipType=True)
-    
-    # Process hand information and gestures
-    if hands:
-        hand = hands[0]
-        lmList = hand["lmList"]
-        fingers = detector.fingersUp(hand)
-      
-            # Check which fingers are up
-           # fingers = fingers_up(hand_landmarks.landmark)
-            #st.write(f"Fingers status: {fingers}")
-        if fingers == [0, 1, 0, 0, 0]:  # Pointer gesture
-            st.write("Pointer gesture detected, ready to draw!")
-        elif fingers == [1, 1, 0, 0, 1]:  # Reset condition
-            st.write("Gesture to reset detected, resetting canvas...")
-        if fingers == [1, 1, 1, 1, 1]:  # All fingers up
-            response = model.generate_content("Generate a creative response")
-            st.write(response.text)
-          
-   return av.VideoFrame.from_ndarray(img, format="bgr24")
+    # Convert the BGR image to RGB before processing
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    results = detector.process(img_rgb)  # Run MediaPipe hand detection
+
+    # Draw landmarks if any hand is detected
+    if results.multi_hand_landmarks:
+        for hand_landmarks in results.multi_hand_landmarks:
+            # Draw hand landmarks
+            mp_drawing.draw_landmarks(
+                img, hand_landmarks, mp_hands.HAND_CONNECTIONS,
+                mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
+                mp_drawing.DrawingSpec(color=(250, 44, 250), thickness=2, circle_radius=2)
+            )
+
+            # Extract landmark positions for gesture recognition (fingers up logic)
+            landmark_positions = hand_landmarks.landmark
+            fingers = fingers_up(landmark_positions)  # Implement fingers up logic
+            
+            if fingers == [0, 1, 0, 0, 0]:  # Pointer gesture
+                st.write("Pointer gesture detected, ready to draw!")
+            elif fingers == [1, 1, 0, 0, 1]:  # Reset condition
+                st.write("Gesture to reset detected, resetting canvas...")
+            if fingers == [1, 1, 1, 1, 1]:  # All fingers up
+                response = model.generate_content("Generate a creative response")
+                st.write(response.text)
+
+    return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 # Initialize WebRTC streamer to capture webcam input and process
 webrtc_ctx = webrtc_streamer(
