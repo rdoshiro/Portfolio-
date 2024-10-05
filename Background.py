@@ -134,9 +134,6 @@ while run:
 webrtc_ctx = webrtc_streamer(
     key="gesture-detector",
     mode=WebRtcMode.SENDRECV,
-    media_stream_constraints={
-        "video": True,
-        "audio": False,
-    },
+    media_stream_constraints={"video": True, "audio": False},
     async_processing=True,
 )
