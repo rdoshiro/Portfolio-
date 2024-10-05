@@ -48,6 +48,7 @@ with col6:
 
 # Hand detector initialization
 mp_drawing = mp.solutions.drawing_utils
+mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 detector = mp_hands.Hands(
     model_complexity=0,
@@ -56,15 +57,15 @@ detector = mp_hands.Hands(
 )
 
 # Function to check which fingers are up
-def fingers_up(landmarks):
-    tips = [4, 8, 12, 16, 20]  # Thumb tip, index tip, etc.
-    up = []
-    for tip in tips:
-        if landmarks[tip].y < landmarks[tip - 2].y:
-            up.append(1)  # Finger is up
-        else:
-            up.append(0)  # Finger is down
-    return up
+# def fingers_up(landmarks):
+    # tips = [4, 8, 12, 16, 20]  # Thumb tip, index tip, etc.
+    # up = []
+    # for tip in tips:
+    #    if landmarks[tip].y < landmarks[tip - 2].y:
+   #         up.append(1)  # Finger is up
+  #      else:
+ #           up.append(0)  # Finger is down
+#    return up
 
 # Callback function to process each frame
 def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
