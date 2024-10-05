@@ -3,7 +3,7 @@
 import google.generativeai as genai
 import numpy as np
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer
+from streamlit_webrtc import  WebRtcMode, webrtc_streamer
 import cv2
 import mediapipe as mp
 from PIL import Image
